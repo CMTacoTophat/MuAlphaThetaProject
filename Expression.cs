@@ -67,11 +67,13 @@ public partial class Expression : ENBase
     }
     public void StringifyRecurse(Expression e, ref string previous) {
         previous += Expression.OperationToChar(e.operation, e.EN1, e.EN2, 0);
-        previous += "(";
+        
         if (!e.EN1.isExpression) {
             previous += ((NW)e.EN1).value;
         } else {
+            previous += "(";
             StringifyRecurse((Expression)e.EN1, ref previous);
+            previous += ")";
         }
 
         previous += ",";
@@ -80,9 +82,11 @@ public partial class Expression : ENBase
         if (!e.EN2.isExpression) {
             previous += ((NW)e.EN2).value;
         } else {
+            previous += "(";
             StringifyRecurse((Expression)e.EN2, ref previous);
+            previous += ")";
         }
 
-        previous += ")";
+        
     }
 }
