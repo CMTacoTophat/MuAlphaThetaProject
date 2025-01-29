@@ -15,6 +15,9 @@ public partial class Expression : ENBase
         EN2 = n2;
         isExpression = true;
     }
+    public Expression() {
+
+    }
     
     public enum Operation {
         Addition,
@@ -60,7 +63,7 @@ public partial class Expression : ENBase
         }
     }
 
-    struct Algebraic {
+    public class Algebraic {
         public static bool unlocked = true;
         public string name;
         public Func<Expression, Expression> Use;
@@ -99,6 +102,20 @@ public partial class Expression : ENBase
                 return newE;
             }
             //TODO: Implement inverse D. P. logic
+            return newE;
+        }
+    );
+
+    Algebraic ComutativeProperty = new Algebraic("Commutative Property",
+        (Expression e) => {
+            Expression newE = new Expression();
+            if (e.operation == Operation.Addition || e.operation == Operation.Multiplication) {
+                newE.EN1 = e.EN2;
+                newE.operation = e.operation;
+                newE.EN2 = e.EN1;
+            } else {
+                newE.IsInvalidResult = true;
+            }
             return newE;
         }
     );
